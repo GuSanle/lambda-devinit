@@ -16,11 +16,12 @@ router.post("/devinit", async (req, res, next) => {
     ],
     jsScope: "ALL",
   };
-  const { Url, Userid, Userpw } = req.body.record;
+  const { Url, Userid, Userpw, initFlag } = req.body.record;
   const kintoneInfo = {
     domain: Url.value,
     username: Userid.value,
     password: Userpw.value,
+    initFlag: initFlag.value,
   };
 
   let kintoneObj = new kintoneApi(kintoneInfo);
@@ -34,10 +35,10 @@ router.post("/devinit", async (req, res, next) => {
   };
 
   const { executable, configurable, scripts } = portalSetting.data.result;
-  if (scripts.length === 0) {
+  if (scripts.length === 0 && kintoneInfo.initFlag === "是") {
     try {
       await kintoneObj.updatePortalCustomSetting(setting);
-      logMsg.level = "ok";
+      logMsg.level = "success";
       logMsg.info = "设置成功";
       console.log(JSON.stringify(logMsg));
       res.send("ok");
