@@ -22,8 +22,7 @@ frameworkVersion: "2 || 3"
 
 provider:
   name: aws
-  runtime: nodejs12.x
-  lambdaHashingVersion: 20201221
+  runtime: nodejs16.x
   region: ap-southeast-1
 # you can overwrite defaults here
 #  stage: dev
